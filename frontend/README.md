@@ -1,190 +1,179 @@
 # Payroll System - Frontend
 
-Interface web React + TypeScript para o sistema de folha de pagamento.
+React + TypeScript web interface for the payroll management system.
 
 ## 🚀 Quick Start
 
-### Pré-requisitos
+### Prerequisites
 - Node.js 20 LTS ([Download](https://nodejs.org/))
-- Backend API rodando em `http://localhost:5000`
+- Backend API running at `http://localhost:5000`
 
-### Instalação e Execução
+### Installation and Execution
 
 ```bash
-# Instalar dependências
+# Install dependencies
 npm install
 
-# Executar em modo desenvolvimento
+# Run in development mode
 npm run dev
 
-# A aplicação estará disponível em:
+# The application will be available at:
 # http://localhost:3000
 ```
 
-### Build para Produção
+### Production Build
 
 ```bash
 # Build
 npm run build
 
-# Preview do build
+# Preview build
 npm run preview
 ```
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
 ```
 frontend/
 ├── src/
-│   ├── components/          # Componentes React reutilizáveis
-│   │   ├── EmployeeForm.tsx       # Formulário de cadastro/edição
-│   │   ├── EmployeeList.tsx       # Lista de funcionários
-│   │   ├── EmployeeDetails.tsx    # Detalhes do funcionário
-│   │   └── Layout.tsx             # Layout principal
-│   ├── pages/               # Páginas da aplicação
-│   │   ├── Home.tsx              # Página inicial
-│   │   ├── CreateEmployee.tsx    # Criar funcionário (US1)
-│   │   ├── SearchEmployee.tsx    # Buscar funcionário (US2)
-│   │   ├── EditEmployee.tsx      # Editar funcionário (US3)
-│   │   └── DeleteEmployee.tsx    # Deletar funcionário (US4)
-│   ├── services/            # Serviços de API
-│   │   └── api.ts                # Cliente Axios
-│   ├── types/               # Tipos TypeScript
-│   │   └── employee.ts           # Tipos de Employee
-│   ├── utils/               # Utilitários
-│   │   ├── formatters.ts         # Formatação de valores
-│   │   └── validators.ts         # Validações
-│   ├── App.tsx              # Componente principal
+│   ├── pages/               # Application pages
+│   │   ├── Home.tsx              # Home page
+│   │   ├── CreateEmployee.tsx    # Create employee
+│   │   ├── SearchEmployee.tsx    # Search employee
+│   │   ├── EmployeeList.tsx      # Employee list
+│   ├── services/            # API services
+│   │   └── api.ts                # Axios client
+│   ├── types/               # TypeScript types
+│   │   └── employee.ts           # Employee types
+│   ├── App.tsx              # Main component
 │   ├── main.tsx             # Entry point
-│   └── index.css            # Estilos globais
-├── public/                  # Arquivos estáticos
+│   ├── App.css              # Component styles
+│   └── index.css            # Global styles
+├── public/                  # Static files
 ├── index.html              # HTML template
-├── package.json            # Dependências
-├── tsconfig.json           # Configuração TypeScript
-├── vite.config.ts          # Configuração Vite
-└── README.md              # Este arquivo
+├── package.json            # Dependencies
+├── tsconfig.json           # TypeScript configuration
+├── vite.config.ts          # Vite configuration
+└── README.md              # This file
 ```
 
-## 🎯 Funcionalidades Implementadas
+## 🎯 Implemented Features
 
-### User Stories
+### Core Features
 
-1. **US1: Employee Registration** (`/create`)
-   - Formulário completo de cadastro
-   - Validação em tempo real
-   - Cálculo automático de folha
-   - Feedback de sucesso/erro
+1. **Create Employee** (`/create`)
+   - Complete registration form
+   - Real-time validation
+   - Automatic payroll calculation
+   - Success/error feedback
 
-2. **US2: Search Employee** (`/search`)
-   - Busca por ID ou matrícula
-   - Exibição de detalhes completos
-   - Visualização de cálculos
+2. **Search Employee** (`/search`)
+   - Search by ID or employee number
+   - Display complete details
+   - View calculations
 
-3. **US3: Modify Employee** (`/edit/:id`)
-   - Edição de dados
-   - Recálculo automático
-   - Confirmação de alterações
+3. **Employee List** (`/list`)
+   - List all employees
+   - Edit and delete actions
+   - Payroll statistics
+   - Responsive table
 
-4. **US4: Delete Employee** (`/delete/:id`)
-   - Confirmação de exclusão
-   - Soft delete
-   - Feedback de sucesso
+4. **Edit Employee** (`/edit/:id`)
+   - Update employee data
+   - Automatic recalculation
+   - Change confirmation
 
-### Componentes Principais
+### Main Components
 
 #### EmployeeForm
-Formulário reutilizável para criar/editar funcionários com:
-- Validação de campos (mês, ano, CNPJ, etc.)
-- Formatação automática (CNPJ, datas, valores)
-- Cálculo em tempo real
-- Feedback visual de erros
+Reusable form for creating/editing employees with:
+- Field validation (month, year, CNPJ, etc.)
+- Automatic formatting (CNPJ, dates, values)
+- Real-time calculation
+- Visual error feedback
 
 #### EmployeeList
-Lista de funcionários com:
-- Paginação
-- Filtros (período, nome, matrícula)
-- Ordenação
-- Ações rápidas (editar, deletar)
+Employee list with:
+- Sorting
+- Quick actions (edit, delete)
+- Payroll statistics
 
 #### EmployeeDetails
-Visualização detalhada com:
-- Dados pessoais
-- Cálculos de folha
-- Histórico de alterações
-- Opções de ação
+Detailed view with:
+- Personal data
+- Payroll calculations
+- Action options
 
-## 🔧 Tecnologias
+## 🔧 Technologies
 
 - **React 18** - UI library
 - **TypeScript** - Type safety
 - **Vite** - Build tool
 - **Axios** - HTTP client
 - **React Router** - Routing
-- **React Hook Form** - Form handling
-- **Zod** - Schema validation
 - **TanStack Query** - Data fetching
 
-## 📝 Validações Implementadas
+## 📝 Implemented Validations
 
-Todas as validações do backend são replicadas no frontend:
+All backend validations are replicated in the frontend:
 
-- ✅ Mês de referência: 1-12
-- ✅ Ano de referência: >1959
-- ✅ CNPJ: Formato e algoritmo brasileiro
-- ✅ Nome/Cargo: Apenas letras
-- ✅ Data de admissão: Válida e >1959
-- ✅ Salário base: > 0
-- ✅ Horas de trabalho: > 0
-- ✅ Dependentes/Filhos: >= 0
+- ✅ Reference month: 1-12
+- ✅ Reference year: >1959
+- ✅ CNPJ: Brazilian format and algorithm
+- ✅ Name/Position: Letters only
+- ✅ Hire date: Valid and >1959
+- ✅ Base salary: > 0
+- ✅ Working hours: > 0
+- ✅ Dependents/Children: >= 0
 
-## 🎨 Formatação
+## 🎨 Formatting
 
-### Valores Monetários
+### Monetary Values
 ```typescript
-R$ 5.000,00  // Salário base
-R$ 340,91    // Horas extras
-R$ 4.234,56  // Salário líquido
+R$ 5,000.00  // Base salary
+R$ 340.91    // Overtime
+R$ 4,234.56  // Net salary
 ```
 
 ### CNPJ
 ```typescript
-12.345.678/0001-95  // Formato brasileiro
+12.345.678/0001-95  // Brazilian format
 ```
 
-### Datas
+### Dates
 ```typescript
-15/01/2020  // Data de admissão
-12/2024     // Período de referência
+01/15/2020  // Hire date
+12/2024     // Reference period
 ```
 
-## 🔄 Fluxo de Dados
+## 🔄 Data Flow
 
 ```
 User Input → Form Validation → API Call → Backend Processing → Response → UI Update
 ```
 
-### Exemplo: Criar Funcionário
+### Example: Create Employee
 
-1. Usuário preenche formulário
-2. Validação em tempo real (Zod)
+1. User fills form
+2. Real-time validation
 3. Submit → POST `/api/employees`
-4. Backend calcula folha
-5. Resposta com dados calculados
-6. UI atualiza com sucesso/erro
+4. Backend calculates payroll
+5. Response with calculated data
+6. UI updates with success/error
 
-## 🧪 Testes (Estrutura)
+## 🧪 Tests (Structure)
 
 ```bash
-# Executar testes (quando implementados)
+# Run tests (when implemented)
 npm test
 
-# Cobertura
+# Coverage
 npm run test:coverage
 ```
 
-## 🌐 Variáveis de Ambiente
+## 🌐 Environment Variables
 
-Crie um arquivo `.env` na raiz do frontend:
+Create a `.env` file in the frontend root:
 
 ```env
 VITE_API_URL=http://localhost:5000
@@ -197,57 +186,55 @@ VITE_API_URL=http://localhost:5000
 - **Bundle Size**: < 500KB (gzipped)
 - **Lighthouse Score**: > 90
 
-## 🔒 Segurança
+## 🔒 Security
 
-- ✅ Validação client-side (não substitui server-side)
-- ✅ Sanitização de inputs
-- ✅ HTTPS em produção
-- ✅ CORS configurado
-- ⏳ JWT authentication (preparado, não implementado)
+- ✅ Client-side validation (doesn't replace server-side)
+- ✅ Input sanitization
+- ✅ HTTPS in production
+- ✅ CORS configured
 
 ## 🐛 Troubleshooting
 
-### Erro: "Cannot connect to API"
-- Verifique se o backend está rodando em `http://localhost:5000`
-- Verifique CORS no backend
-- Verifique a variável `VITE_API_URL`
+### Error: "Cannot connect to API"
+- Check if backend is running at `http://localhost:5000`
+- Check CORS in backend
+- Check `VITE_API_URL` variable
 
-### Erro: "Module not found"
+### Error: "Module not found"
 ```bash
 rm -rf node_modules package-lock.json
 npm install
 ```
 
-### Erro: "Port 3000 already in use"
+### Error: "Port 3000 already in use"
 ```bash
-# Altere a porta em vite.config.ts
+# Change port in vite.config.ts
 server: {
-  port: 3001,  // ou outra porta
+  port: 3001,  // or another port
 }
 ```
 
-## 📚 Recursos Adicionais
+## 📚 Additional Resources
 
 - [React Documentation](https://react.dev/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [Vite Guide](https://vitejs.dev/guide/)
-- [React Hook Form](https://react-hook-form.com/)
 - [TanStack Query](https://tanstack.com/query/latest)
 
-## 🤝 Contribuindo
+## 🤝 Contributing
 
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 📄 Licença
+## 📄 License
 
-[A definir]
+[To be defined]
 
 ---
 
-**Última Atualização**: 2024-12-12  
-**Versão**: 1.0.0  
-**Status**: ✅ Estrutura Criada - Pronto para `npm install`
+**Last Updated**: 2024-12-12  
+**Version**: 1.0.0  
+**Status**: ✅ Complete and Functional

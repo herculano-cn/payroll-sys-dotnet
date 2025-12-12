@@ -1,57 +1,57 @@
 # Payroll API - Backend
 
-API RESTful para gerenciamento de folha de pagamento, modernizada de um sistema legado COBOL.
+RESTful API for payroll management built with .NET 9.
 
 ## 🚀 Quick Start
 
-### Pré-requisitos
-- .NET 8 SDK ([Download](https://dotnet.microsoft.com/download/dotnet/8.0))
+### Prerequisites
+- .NET 9 SDK ([Download](https://dotnet.microsoft.com/download/dotnet/9.0))
 
-### Executar a API
+### Run the API
 
 ```bash
-# Restaurar dependências
+# Restore dependencies
 dotnet restore
 
-# Executar a API
+# Run the API
 dotnet run --project Payroll.API
 
-# A API estará disponível em:
+# The API will be available at:
 # - HTTP: http://localhost:5000
 # - HTTPS: https://localhost:5001
 # - Swagger: http://localhost:5000/swagger
 ```
 
-### Criar/Atualizar Database
+### Create/Update Database
 
 ```bash
-# O banco de dados SQLite é criado automaticamente na primeira execução
-# Arquivo: payroll.db (na raiz do projeto API)
+# SQLite database is created automatically on first run
+# File: payroll.db (in the API project root)
 
-# Para recriar o banco (se necessário):
+# To recreate the database (if needed):
 dotnet ef database drop --project Payroll.Infrastructure --startup-project Payroll.API
 dotnet ef database update --project Payroll.Infrastructure --startup-project Payroll.API
 ```
 
-## 📚 Documentação da API
+## 📚 API Documentation
 
-Acesse a documentação interativa Swagger em: **http://localhost:5000/swagger**
+Access interactive Swagger documentation at: **http://localhost:5000/swagger**
 
-### Endpoints Principais
+### Main Endpoints
 
-#### Employees (Funcionários)
+#### Employees
 
-| Método | Endpoint | Descrição | User Story |
-|--------|----------|-----------|------------|
-| POST | `/api/employees` | Criar novo funcionário | US1: Employee Registration |
-| GET | `/api/employees/{id}` | Buscar por ID | US2: Search Employee |
-| GET | `/api/employees/by-employee-id/{employeeId}` | Buscar por matrícula | US2: Search Employee |
-| GET | `/api/employees` | Listar todos | - |
-| GET | `/api/employees/by-period?month=X&year=Y` | Buscar por período | - |
-| PUT | `/api/employees/{id}` | Atualizar funcionário | US3: Modify Employee |
-| DELETE | `/api/employees/{id}` | Deletar funcionário (soft delete) | US4: Delete Employee |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/employees` | Create new employee |
+| GET | `/api/employees/{id}` | Get by ID |
+| GET | `/api/employees/by-employee-id/{employeeId}` | Get by employee number |
+| GET | `/api/employees` | List all |
+| GET | `/api/employees/by-period?month=X&year=Y` | Get by period |
+| PUT | `/api/employees/{id}` | Update employee |
+| DELETE | `/api/employees/{id}` | Delete employee (soft delete) |
 
-### Exemplo de Requisição
+### Request Example
 
 **POST /api/employees**
 
@@ -60,8 +60,8 @@ Acesse a documentação interativa Swagger em: **http://localhost:5000/swagger**
   "referenceMonth": 12,
   "referenceYear": 2024,
   "employeeId": "12345",
-  "name": "João Silva",
-  "position": "Desenvolvedor",
+  "name": "John Doe",
+  "position": "Developer",
   "cnpj": "12345678000195",
   "hireDate": "2020-01-15",
   "absences": 0,
@@ -74,7 +74,7 @@ Acesse a documentação interativa Swagger em: **http://localhost:5000/swagger**
 }
 ```
 
-**Resposta (201 Created)**
+**Response (201 Created)**
 
 ```json
 {
@@ -84,8 +84,8 @@ Acesse a documentação interativa Swagger em: **http://localhost:5000/swagger**
     "referenceMonth": 12,
     "referenceYear": 2024,
     "employeeId": "12345",
-    "name": "João Silva",
-    "position": "Desenvolvedor",
+    "name": "John Doe",
+    "position": "Developer",
     "cnpj": "12345678000195",
     "hireDate": "2020-01-15T00:00:00",
     "absences": 0,
@@ -113,7 +113,7 @@ Acesse a documentação interativa Swagger em: **http://localhost:5000/swagger**
 }
 ```
 
-## 🏗️ Arquitetura
+## 🏗️ Architecture
 
 ```
 Payroll.API/              # API Layer (Controllers, DTOs, Middleware)
@@ -140,47 +140,46 @@ Payroll.Infrastructure/   # Data Access Layer
 └── Repositories/         # Repository implementations
 ```
 
-## 🧪 Testes
+## 🧪 Tests
 
 ```bash
-# Executar todos os testes
+# Run all tests
 dotnet test
 
-# Executar com cobertura
+# Run with coverage
 dotnet test /p:CollectCoverage=true
 ```
 
-## 📊 Regras de Negócio Implementadas
+## 📊 Business Rules Implemented
 
-### Validações
-- ✅ Mês de referência: 1-12
-- ✅ Ano de referência: >1959
-- ✅ CNPJ: Algoritmo completo de validação (14 dígitos + checksum)
-- ✅ Nome/Cargo: Apenas letras
-- ✅ Data de admissão: Válida e >1959
+### Validations
+- ✅ Reference month: 1-12
+- ✅ Reference year: >1959
+- ✅ CNPJ: Complete validation algorithm (14 digits + checksum)
+- ✅ Name/Position: Letters only
+- ✅ Hire date: Valid and >1959
 
-### Cálculos
-- ✅ **Horas Extras**: 150% da taxa horária
-- ✅ **Descanso Semanal (DSR)**: (Horas extras / 26) * 4
-- ✅ **INSS**: Taxas progressivas (8%, 9%, 11%)
-- ✅ **IRRF**: Taxas progressivas (7.5%, 15%, 22.5%, 27.5%)
-- ✅ **Salário Família**: R$ 41,37 ou R$ 29,16 por filho
-- ✅ **Vale Transporte**: 6% do salário base (opcional)
-- ✅ **FGTS**: 8% do salário bruto
-- ✅ **Desconto de Faltas**: (Salário base / 30) * Faltas
+### Calculations
+- ✅ **Overtime**: 150% of hourly rate
+- ✅ **Weekly Rest (DSR)**: (Overtime / 26) * 4
+- ✅ **INSS**: Progressive rates (8%, 9%, 11%)
+- ✅ **IRRF**: Progressive rates (7.5%, 15%, 22.5%, 27.5%)
+- ✅ **Family Allowance**: R$ 41.37 or R$ 29.16 per child
+- ✅ **Transportation Voucher**: 6% of base salary (optional)
+- ✅ **FGTS**: 8% of gross salary
+- ✅ **Absence Deduction**: (Base salary / 30) * Absences
 
-## 🔒 Segurança
+## 🔒 Security
 
-- ✅ Validação de entrada com FluentValidation
-- ✅ Proteção contra SQL Injection (EF Core parametrizado)
-- ✅ Soft delete para auditoria
-- ✅ CORS configurado
-- ✅ HTTPS enforced em produção
-- ⏳ JWT Authentication (preparado, não implementado ainda)
+- ✅ Input validation with FluentValidation
+- ✅ SQL Injection protection (EF Core parameterized queries)
+- ✅ Soft delete for audit trail
+- ✅ CORS configured
+- ✅ HTTPS enforced in production
 
 ## 📝 Logs
 
-Os logs são gravados no console e podem ser configurados em `appsettings.json`:
+Logs are written to console and can be configured in `appsettings.json`:
 
 ```json
 {
@@ -195,35 +194,35 @@ Os logs são gravados no console e podem ser configurados em `appsettings.json`:
 
 ## 🐛 Troubleshooting
 
-### Erro: "Database is locked"
-- Feche todas as conexões ao banco SQLite
-- Delete o arquivo `payroll.db` e execute novamente
+### Error: "Database is locked"
+- Close all connections to SQLite database
+- Delete `payroll.db` file and run again
 
-### Erro: "Port already in use"
-- Altere a porta em `Properties/launchSettings.json`
-- Ou mate o processo usando a porta: `lsof -ti:5000 | xargs kill`
+### Error: "Port already in use"
+- Change port in `Properties/launchSettings.json`
+- Or kill the process: `lsof -ti:5000 | xargs kill`
 
-### Erro: "Package restore failed"
-- Execute: `dotnet restore --force`
-- Limpe o cache: `dotnet nuget locals all --clear`
+### Error: "Package restore failed"
+- Run: `dotnet restore --force`
+- Clear cache: `dotnet nuget locals all --clear`
 
-## 📦 Build para Produção
+## 📦 Production Build
 
 ```bash
 # Build Release
 dotnet build -c Release
 
-# Publicar
+# Publish
 dotnet publish -c Release -o ./publish
 
-# Executar publicação
+# Run published app
 cd publish
 dotnet Payroll.API.dll
 ```
 
-## 🔄 Migração para SQL Server
+## 🔄 Migration to SQL Server
 
-Para migrar de SQLite para SQL Server, altere apenas a connection string:
+To migrate from SQLite to SQL Server, change the connection string:
 
 ```json
 {
@@ -233,41 +232,41 @@ Para migrar de SQLite para SQL Server, altere apenas a connection string:
 }
 ```
 
-E instale o pacote:
+Install the package:
 ```bash
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
-Altere em `Program.cs`:
+Update in `Program.cs`:
 ```csharp
-// De:
+// From:
 options.UseSqlite(connectionString)
 
-// Para:
+// To:
 options.UseSqlServer(connectionString)
 ```
 
-## 📚 Recursos Adicionais
+## 📚 Additional Resources
 
-- [Documentação .NET 8](https://docs.microsoft.com/dotnet/core/)
+- [.NET 9 Documentation](https://docs.microsoft.com/dotnet/core/)
 - [Entity Framework Core](https://docs.microsoft.com/ef/core/)
 - [ASP.NET Core](https://docs.microsoft.com/aspnet/core/)
 - [FluentValidation](https://docs.fluentvalidation.net/)
 
-## 🤝 Contribuindo
+## 🤝 Contributing
 
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 📄 Licença
+## 📄 License
 
-[A definir]
+[To be defined]
 
 ---
 
-**Última Atualização**: 2024-12-12  
-**Versão**: 1.0.0  
-**Status**: ✅ API Completa e Funcional
+**Last Updated**: 2024-12-12  
+**Version**: 1.0.0  
+**Status**: ✅ API Complete and Functional
